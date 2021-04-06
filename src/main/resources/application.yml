@@ -1,0 +1,17 @@
+server.servlet.context-path: /application
+
+spring.datasource:
+  url: jdbc:h2:mem:testdb
+  driverClassName: org.h2.Driver
+  username: sa
+  password:
+
+spring.liquibase:
+  enabled: true
+  change-log: classpath:/liquibase/cnahgelog.xml
+
+spring.jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
