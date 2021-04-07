@@ -22,6 +22,9 @@ class AccountService(
     @Transactional
     // Для PostgreSQL по-умолчанию изоляция READ_COMMITTED
     fun transfer(sourceAccountId: String, destinationAccountId: String, transferAmount: BigDecimal) {
+        if (transferAmount < BigDecimal.ZERO) {
+            throw IllegalArgumentException("fund amount must be positive")
+        }
         val sourceAccount: AccountEntity
         val destinationAccount: AccountEntity
 
@@ -54,12 +57,18 @@ class AccountService(
 
     @Transactional
     fun fund(destinationAccountId: String, amount: BigDecimal) {
+        if (amount < BigDecimal.ZERO) {
+            throw IllegalArgumentException("fund amount must be positive")
+        }
         val destinationAccount = selectForUpdate(destinationAccountId)
         accountRepository.save(destinationAccount.apply { balance += amount })
     }
 
     @Transactional
     fun withdrawal(sourceAccountId: String, amount: BigDecimal) {
+        if (amount < BigDecimal.ZERO) {
+            throw IllegalArgumentException("fund amount must be positive")
+        }
         val sourceAccount = selectForUpdate(sourceAccountId)
         val decreasedSourceBalance = sourceAccount.balance - amount
         if (decreasedSourceBalance >= BigDecimal.ZERO) {
