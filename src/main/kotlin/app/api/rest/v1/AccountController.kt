@@ -16,15 +16,24 @@ class AccountController(
     @PostMapping("transaction/transfer")
     fun transfer(
         @RequestBody transferRequest: TransferRequestDto
-    ) = accountService.transfer(transferRequest.sourceAccountId, transferRequest.destinationAccountId, transferRequest.transferAmount)
+    ) {
+        accountService.transfer(
+            transferRequest.sourceAccountId,
+            transferRequest.destinationAccountId,
+            transferRequest.transferAmount)
+    }
 
     @PostMapping("transaction/fund")
     fun fund(
         @RequestBody fundRequest: FundRequestDto
-    ) = accountService.fund(fundRequest.destinationAccountId, fundRequest.amount)
+    ) {
+        accountService.fund(fundRequest.destinationAccountId, fundRequest.amount)
+    }
 
     @PostMapping("transaction/withdrawal")
     fun withdrawal(
         @RequestBody withdrawalRequest: WithdrawalRequestDto
-    ) = accountService.withdrawal(withdrawalRequest.sourceAccountId, withdrawalRequest.amount)
+    ) {
+        accountService.withdrawal(withdrawalRequest.sourceAccountId, withdrawalRequest.amount)
+    }
 }
