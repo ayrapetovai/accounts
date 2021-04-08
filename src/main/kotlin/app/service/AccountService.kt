@@ -2,7 +2,6 @@ package app.service
 
 import app.repository.AccountEntity
 import app.repository.AccountRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.lang.IllegalArgumentException
@@ -12,15 +11,14 @@ import java.math.BigDecimal
 // В этом классе (слой логики) не должно быть Entity и Dto, только Vo
 @Service
 class AccountService(
-    @Autowired
     private val accountRepository: AccountRepository
 ) {
 
+    // Для PostgreSQL по-умолчанию изоляция READ_COMMITTED
     fun getAccount(accountId: String) =
         accountRepository.findById(accountId)
 
     @Transactional
-    // Для PostgreSQL по-умолчанию изоляция READ_COMMITTED
     fun transfer(sourceAccountId: String, destinationAccountId: String, transferAmount: BigDecimal) {
         if (transferAmount < BigDecimal.ZERO) {
             throw IllegalArgumentException("fund amount must be positive")

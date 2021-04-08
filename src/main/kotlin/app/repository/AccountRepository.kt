@@ -20,5 +20,5 @@ interface AccountRepository: JpaRepository<AccountEntity, String> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @QueryHints(QueryHint(name = "javax.persistence.lock.timeout", value = "3000"))
     @Query("from AccountEntity where id = :accountId")
-    fun findByIdForUpdate(accountId: String): Optional<AccountEntity> = findById(accountId)
+    fun findByIdForUpdate(accountId: String): Optional<AccountEntity>
 }
